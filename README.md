@@ -1,4 +1,4 @@
-# react-starter
+# stimulant
 
 To sort out your dependencies, do:
 
