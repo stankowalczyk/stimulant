@@ -8,9 +8,9 @@ import livereload from "gulp-livereload";
 import uglify from "gulp-uglify";
 import minifyCSS from "gulp-minify-css";
 import less from "gulp-less";
+import autoprefixer from "gulp-autoprefixer";
 import rename from "gulp-rename";
 import rev from "gulp-rev";
-import size from "gulp-size";
 import watch from "gulp-watch";
 import plumber from "gulp-plumber";
 import browserify from "browserify";
@@ -45,7 +45,6 @@ gulp.task("build-scripts", () => {
     .pipe(replace("$ENV", JSON.stringify(env)))
     .pipe(gulpif(env.minify, uglify({ mangle: false })))
     .pipe(rev())
-    .pipe(size({ showFiles: true }))
     .pipe(gulp.dest(`${config.buildDir}/scripts`));
 });
 
@@ -58,9 +57,9 @@ gulp.task("build-styles", () => {
     }))
     .pipe(less())
     .pipe(rename(`${env.name}.css`))
+    .pipe(autoprefixer({ browsers: ["> 1%"] }))
     .pipe(gulpif(env.minify, minifyCSS()))
     .pipe(rev())
-    .pipe(size({ showFiles: true }))
     .pipe(gulp.dest(`${config.buildDir}/styles`));
 });
 
@@ -71,11 +70,9 @@ gulp.task("build-misc", () => {
   return gulp
     .src(config.misc)
     .pipe(imagesFilter)
-    .pipe(size({ showFiles: true }))
     .pipe(gulp.dest(`${config.buildDir}/images`))
     .pipe(imagesFilter.restore())
     .pipe(fontsFilter)
-    .pipe(size({ showFiles: true }))
     .pipe(gulp.dest(`${config.buildDir}/fonts`))
     .pipe(fontsFilter.restore());
 });
@@ -89,7 +86,6 @@ gulp.task("build-index", () => {
         { ignorePath: config.buildDir, addRootSlash: false, removeTags: true }
       )
     )
-    .pipe(size({ showFiles: true }))
     .pipe(gulp.dest(config.buildDir));
 });
 
