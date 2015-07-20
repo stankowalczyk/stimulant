@@ -83,7 +83,7 @@ gulp.task("build-index", () => {
     .pipe(
       inject(
         gulp.src([`${config.buildDir}/**/*.css`, `${config.buildDir}/**/*.js`], { read: false }),
-        { ignorePath: config.buildDir, addRootSlash: false, removeTags: true }
+        { ignorePath: config.buildDir, addRootSlash: false, removeTags: true, quiet: true }
       )
     )
     .pipe(gulp.dest(config.buildDir));
@@ -105,7 +105,7 @@ gulp.task("serve", ["build"], done => {
 });
 
 gulp.task("reload", () => {
-  return gulp.src(config.buildDir).pipe(livereload({ start: true }));
+  return gulp.src(config.buildDir).pipe(livereload({ start: true, quiet: true }));
 });
 
 gulp.task("watch", ["serve", "reload"], () => {
