@@ -17,7 +17,7 @@ import browserify from "browserify";
 import babelify from "babelify";
 import source from "vinyl-source-stream";
 import buffer from "vinyl-buffer";
-import rimraf from "rimraf";
+import del from "del";
 import runSequence from "run-sequence";
 import express from "express";
 import http from "http";
@@ -90,7 +90,7 @@ gulp.task("build-index", () => {
 });
 
 gulp.task("clean", done => {
-  rimraf(config.buildDir, done);
+  del(config.buildDir, done);
 });
 
 gulp.task("build", ["clean"], done => {
@@ -109,7 +109,7 @@ gulp.task("reload", () => {
 });
 
 gulp.task("watch", ["serve", "reload"], () => {
-  return watch(`${config.sourceDir}/**/*`, () => { runSequence("serve", "reload") });
+  return watch(`${config.sourceDir}/**/*`, () => { runSequence("build", "reload") });
 });
 
 gulp.task("default", ["build"]);
