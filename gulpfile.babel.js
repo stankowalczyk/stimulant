@@ -5,6 +5,7 @@ import filter from "gulp-filter";
 import inject from "gulp-inject";
 import replace from "gulp-replace";
 import livereload from "gulp-livereload";
+import browserSync from "browser-sync";
 import uglify from "gulp-uglify";
 import minifyCSS from "gulp-minify-css";
 import sass from "gulp-sass";
@@ -19,11 +20,9 @@ import source from "vinyl-source-stream";
 import buffer from "vinyl-buffer";
 import del from "del";
 import runSequence from "run-sequence";
-import express from "express";
 import http from "http";
 import config from "./gulpconfig";
 
-let server = http.createServer(express().use(express.static(config.buildDir)));
 let env = config.environments.find(e => e.name === (process.env.NODE_ENV || "development"));
 if (env) {
   gutil.log(gutil.colors.gray(`Selected environment = ${env.name}.`));
@@ -61,6 +60,7 @@ gulp.task("build-styles", () => {
     .pipe(gulpif(env.minify, minifyCSS()))
     .pipe(gulpif(env.rev, rev()))
     .pipe(gulp.dest(`${config.buildDir}/styles`))
+    .pipe(browserSync.reload({ stream: true })); // Stream the reload to make it happen immediately
 });
 
 gulp.task("build-misc", () => {
@@ -94,22 +94,22 @@ gulp.task("clean", done => {
 });
 
 gulp.task("build", ["clean"], done => {
-  runSequence("build-scripts", "build-styles", "build-misc", "build-index", done);
+  runSequence("build-styles", "build-scripts", "build-misc", "build-index", done);
 });
 
-gulp.task("serve", ["build"], done => {
-  server.listen(config.serverPort, () => {
-    gutil.log(gutil.colors.green(`Web server started and listening on port ${server.address().port}.`));
-    done();
+gulp.task("serve", () => {
+  browserSync({
+    server: {
+      baseDir: config.buildDir,
+    },
+    port: config.serverPort
   });
+
+  gutil.log(gutil.colors.green(`Web server started and listening on port ${config.serverPort}.`));
 });
 
-gulp.task("reload", () => {
-  return gulp.src(config.buildDir).pipe(livereload({ start: true, quiet: true }));
-});
-
-gulp.task("watch", ["serve", "reload"], () => {
-  return watch(`${config.sourceDir}/**/*`, () => { runSequence("build", "reload") });
+gulp.task("watch", ["serve"], () => {
+  return watch(`${config.sourceDir}/**/*`, () => { runSequence("build") });
 });
 
 gulp.task("default", ["build"]);
