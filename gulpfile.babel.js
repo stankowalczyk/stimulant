@@ -7,7 +7,7 @@ import replace from "gulp-replace";
 import livereload from "gulp-livereload";
 import uglify from "gulp-uglify";
 import minifyCSS from "gulp-minify-css";
-import less from "gulp-less";
+import sass from "gulp-sass";
 import autoprefixer from "gulp-autoprefixer";
 import rename from "gulp-rename";
 import rev from "gulp-rev";
@@ -55,7 +55,7 @@ gulp.task("build-styles", () => {
       gutil.log(gutil.colors.red(err.message));
       gutil.beep();
     }))
-    .pipe(less())
+    .pipe(sass())
     .pipe(rename(`${env.name}.css`))
     .pipe(autoprefixer({ browsers: ["> 1%"] }))
     .pipe(gulpif(env.minify, minifyCSS()))
