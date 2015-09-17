@@ -12,10 +12,12 @@
   "environments": [{
     "name": "development",
     "minify": false,
+    "rev":    false,
     "apiUrl": "http://localhost:3000"
   }, {
     "name": "production",
     "minify": true,
+    "rev":    true,
     "apiUrl": "http://localhost:4000"
   }]
 }
