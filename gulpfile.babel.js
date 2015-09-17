@@ -44,7 +44,7 @@ gulp.task("build-scripts", () => {
     .pipe(buffer()) // Convert from streaming mode to buffered mode.
     .pipe(replace("$ENV", JSON.stringify(env)))
     .pipe(gulpif(env.minify, uglify({ mangle: false })))
-    .pipe(rev())
+    .pipe(gulpif(env.rev, rev()))
     .pipe(gulp.dest(`${config.buildDir}/scripts`));
 });
 
@@ -59,8 +59,8 @@ gulp.task("build-styles", () => {
     .pipe(rename(`${env.name}.css`))
     .pipe(autoprefixer({ browsers: ["> 1%"] }))
     .pipe(gulpif(env.minify, minifyCSS()))
-    .pipe(rev())
-    .pipe(gulp.dest(`${config.buildDir}/styles`));
+    .pipe(gulpif(env.rev, rev()))
+    .pipe(gulp.dest(`${config.buildDir}/styles`))
 });
 
 gulp.task("build-misc", () => {
