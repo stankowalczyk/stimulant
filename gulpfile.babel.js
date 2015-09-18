@@ -19,6 +19,7 @@ import source from "vinyl-source-stream";
 import buffer from "vinyl-buffer";
 import del from "del";
 import runSequence from "run-sequence";
+import getWantedDependencies from "get-wanted-dependencies";
 import config from "./gulpconfig";
 
 let env = config.environments.find(e => e.name === (process.env.NODE_ENV || "development"));
@@ -27,6 +28,23 @@ if (env) {
 } else {
   throw new Error("Unsupported environment specified.");
 }
+
+gulp.task("clean", done => {
+  del(config.buildDir, done);
+});
+
+gulp.task("check-dependencies", done => {
+  getWantedDependencies(__dirname)
+  .then(wantedDependencies => {
+    if (wantedDependencies.length > 0) {
+      gutil.log(gutil.colors.red("Wanted dependencies not installed. Run `npm install`."));
+      gutil.beep();
+      process.exit(1);
+    }
+
+    done();
+  }).catch(err => done(err));
+});
 
 gulp.task("build-scripts", () => {
   return browserify({ entries: `./${config.script}`, extensions: [".jsx"] })
@@ -87,12 +105,8 @@ gulp.task("build-index", () => {
     .pipe(gulp.dest(config.buildDir));
 });
 
-gulp.task("clean", done => {
-  del(config.buildDir, done);
-});
-
 gulp.task("build", ["clean"], done => {
-  runSequence("build-styles", "build-scripts", "build-misc", "build-index", done);
+  runSequence("check-dependencies", "build-styles", "build-scripts", "build-misc", "build-index", done);
 });
 
 gulp.task("serve", ["build"], () => {
