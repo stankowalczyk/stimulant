@@ -4,7 +4,6 @@ import gulpif from "gulp-if";
 import filter from "gulp-filter";
 import inject from "gulp-inject";
 import replace from "gulp-replace";
-import livereload from "gulp-livereload";
 import browserSync from "browser-sync";
 import uglify from "gulp-uglify";
 import minifyCSS from "gulp-minify-css";
@@ -20,7 +19,6 @@ import source from "vinyl-source-stream";
 import buffer from "vinyl-buffer";
 import del from "del";
 import runSequence from "run-sequence";
-import http from "http";
 import config from "./gulpconfig";
 
 let env = config.environments.find(e => e.name === (process.env.NODE_ENV || "development"));
@@ -97,15 +95,13 @@ gulp.task("build", ["clean"], done => {
   runSequence("build-styles", "build-scripts", "build-misc", "build-index", done);
 });
 
-gulp.task("serve", () => {
+gulp.task("serve", ["build"], () => {
   browserSync({
     server: {
       baseDir: config.buildDir,
     },
     port: config.serverPort
   });
-
-  gutil.log(gutil.colors.green(`Web server started and listening on port ${config.serverPort}.`));
 });
 
 gulp.task("watch", ["serve"], () => {
