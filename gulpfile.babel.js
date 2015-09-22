@@ -30,12 +30,11 @@ if (env) {
 }
 
 gulp.task("clean", done => {
-  del(config.buildDir, done);
+  del(config.buildDir).then(() => done()).catch(err => done(err));
 });
 
 gulp.task("check-dependencies", done => {
-  getWantedDependencies(__dirname)
-  .then(wantedDependencies => {
+  getWantedDependencies(__dirname).then(wantedDependencies => {
     if (wantedDependencies.length > 0) {
       gutil.log(gutil.colors.red("Wanted dependencies not installed. Run `npm install`."));
       gutil.beep();
