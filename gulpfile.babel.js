@@ -14,6 +14,7 @@ import rev from "gulp-rev";
 import watch from "gulp-watch";
 import plumber from "gulp-plumber";
 import browserify from "browserify";
+import watchify from "watchify";
 import babelify from "babelify";
 import source from "vinyl-source-stream";
 import buffer from "vinyl-buffer";
@@ -28,6 +29,15 @@ if (env) {
 } else {
   throw new Error("Unsupported environment specified.");
 }
+
+let bundler = watchify(browserify({
+  entries: `./${config.script}`,
+  extensions: [".jsx"],
+  cache: {},
+  packageCache: {}
+}));
+
+bundler.transform(babelify.configure({ optional: ["es7.classProperties", "es7.decorators"] }));
 
 gulp.task("clean", done => {
   del(config.buildDir).then(() => done()).catch(err => done(err));
@@ -46,8 +56,7 @@ gulp.task("check-dependencies", done => {
 });
 
 gulp.task("build-scripts", () => {
-  return browserify({ entries: `./${config.script}`, extensions: [".jsx"] })
-    .transform(babelify.configure({ optional: ["es7.classProperties", "es7.decorators"] }))
+  return bundler
     .bundle()
     .on("error", function(err) {
       gutil.log(gutil.colors.red(err.message));
@@ -74,8 +83,7 @@ gulp.task("build-styles", () => {
     .pipe(autoprefixer({ browsers: ["> 1%"] }))
     .pipe(gulpif(env.minify, minifyCSS()))
     .pipe(gulpif(env.rev, rev()))
-    .pipe(gulp.dest(`${config.buildDir}/styles`))
-    .pipe(browserSync.reload({ stream: true })); // Stream the reload to make it happen immediately
+    .pipe(gulp.dest(`${config.buildDir}/styles`));
 });
 
 gulp.task("build-misc", () => {
@@ -101,11 +109,12 @@ gulp.task("build-index", () => {
         { ignorePath: config.buildDir, addRootSlash: false, removeTags: true, quiet: true }
       )
     )
-    .pipe(gulp.dest(config.buildDir));
+    .pipe(gulp.dest(config.buildDir))
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task("build", ["clean"], done => {
-  runSequence("check-dependencies", "build-styles", "build-scripts", "build-misc", "build-index", done);
+  runSequence(["check-dependencies", "build-styles", "build-scripts", "build-misc"], "build-index", done);
 });
 
 gulp.task("serve", ["build"], () => {
