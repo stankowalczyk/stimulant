@@ -116,7 +116,7 @@ gulp.task("build", ["clean"], done => {
   runSequence(["check-dependencies", "build-scripts", "build-styles", "build-misc"], "build-index", done);
 });
 
-gulp.task("serve", ["build"], () => {
+gulp.task("watch", ["build"], () => {
   browserSync({
     server: {
       baseDir: config.buildDir
@@ -126,9 +126,7 @@ gulp.task("serve", ["build"], () => {
     notify: false,
     logFileChanges: false
   });
-});
 
-gulp.task("watch", ["serve"], () => {
   return watch(`${config.sourceDir}/**/*`, () => {
     runSequence("build", () => { browserSync.reload() });
   });
