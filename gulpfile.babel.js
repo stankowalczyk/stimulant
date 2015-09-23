@@ -35,9 +35,9 @@ let bundler = watchify(browserify({
   extensions: [".jsx"],
   cache: {},
   packageCache: {}
+})).transform(babelify.configure({
+  optional: ["es7.classProperties", "es7.decorators"]
 }));
-
-bundler.transform(babelify.configure({ optional: ["es7.classProperties", "es7.decorators"] }));
 
 gulp.task("clean", done => {
   del(config.buildDir).then(() => done()).catch(err => done(err));
@@ -109,12 +109,11 @@ gulp.task("build-index", () => {
         { ignorePath: config.buildDir, addRootSlash: false, removeTags: true, quiet: true }
       )
     )
-    .pipe(gulp.dest(config.buildDir))
-    .pipe(browserSync.reload({ stream: true }));
+    .pipe(gulp.dest(config.buildDir));
 });
 
 gulp.task("build", ["clean"], done => {
-  runSequence(["check-dependencies", "build-styles", "build-scripts", "build-misc"], "build-index", done);
+  runSequence(["check-dependencies", "build-scripts", "build-styles", "build-misc"], "build-index", done);
 });
 
 gulp.task("serve", ["build"], () => {
@@ -130,7 +129,9 @@ gulp.task("serve", ["build"], () => {
 });
 
 gulp.task("watch", ["serve"], () => {
-  return watch(`${config.sourceDir}/**/*`, () => { runSequence("build") });
+  return watch(`${config.sourceDir}/**/*`, () => {
+    runSequence("build", () => { browserSync.reload() });
+  });
 });
 
 gulp.task("default", ["build"]);
