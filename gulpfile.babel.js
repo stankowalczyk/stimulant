@@ -124,7 +124,8 @@ gulp.task("serve", ["build"], () => {
     },
     port: config.serverPort,
     open: false,
-    notify: false
+    notify: false,
+    logFileChanges: false
   });
 });
 
