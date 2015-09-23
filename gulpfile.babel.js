@@ -83,7 +83,8 @@ gulp.task("build-styles", () => {
     .pipe(autoprefixer({ browsers: ["> 1%"] }))
     .pipe(gulpif(env.minify, minifyCSS()))
     .pipe(gulpif(env.rev, rev()))
-    .pipe(gulp.dest(`${config.buildDir}/styles`));
+    .pipe(gulp.dest(`${config.buildDir}/styles`))
+    .pipe(gulpif(!env.rev, browserSync.stream())); // Auto-inject SASS changes into the browser.
 });
 
 gulp.task("build-misc", () => {
@@ -127,8 +128,13 @@ gulp.task("watch", ["build"], () => {
     logFileChanges: false
   });
 
-  return watch(`${config.sourceDir}/**/*`, () => {
-    runSequence("build", () => { browserSync.reload() });
+  return watch(`${config.sourceDir}/**/*`, file => {
+    runSequence("build", () => {
+      // If a non-SASS file was changed, refresh the browser!
+      if (file.extname !== ".scss" || env.rev) {
+        browserSync.reload();
+      }
+    });
   });
 });
 
