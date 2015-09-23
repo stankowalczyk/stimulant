@@ -120,9 +120,11 @@ gulp.task("build", ["clean"], done => {
 gulp.task("serve", ["build"], () => {
   browserSync({
     server: {
-      baseDir: config.buildDir,
+      baseDir: config.buildDir
     },
-    port: config.serverPort
+    port: config.serverPort,
+    open: false,
+    notify: false
   });
 });
 
