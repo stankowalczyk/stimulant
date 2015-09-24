@@ -14,7 +14,7 @@ import rev from "gulp-rev";
 import watch from "gulp-watch";
 import plumber from "gulp-plumber";
 import browserify from "browserify";
-import watchify from "watchify";
+import rememberify from "rememberify";
 import babelify from "babelify";
 import source from "vinyl-source-stream";
 import buffer from "vinyl-buffer";
@@ -33,11 +33,10 @@ if (env) {
 let bundler = browserify({
   entries: `./${config.script}`,
   extensions: [".jsx"],
-  cache: {},
-  packageCache: {}
+  cache: {}
 }).transform(babelify.configure({
   optional: ["es7.classProperties", "es7.decorators"]
-})).plugin(watchify);
+})).plugin(rememberify);
 
 gulp.task("clean", done => {
   del(config.buildDir).then(() => done()).catch(err => done(err));
@@ -129,6 +128,9 @@ gulp.task("watch", ["build"], () => {
   });
 
   return watch(`${config.sourceDir}/**/*`, file => {
+    // Invalidate Browserify cache for the changed file.
+    rememberify.forget(bundler, file.path);
+
     runSequence("build", () => {
       // If a non-SASS file was changed, refresh the browser!
       if (file.extname !== ".scss" || env.rev) {
