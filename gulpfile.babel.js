@@ -30,14 +30,14 @@ if (env) {
   throw new Error("Unsupported environment specified.");
 }
 
-let bundler = watchify(browserify({
+let bundler = browserify({
   entries: `./${config.script}`,
   extensions: [".jsx"],
   cache: {},
   packageCache: {}
-})).transform(babelify.configure({
+}).transform(babelify.configure({
   optional: ["es7.classProperties", "es7.decorators"]
-}));
+})).plugin(watchify);
 
 gulp.task("clean", done => {
   del(config.buildDir).then(() => done()).catch(err => done(err));
