@@ -2,28 +2,14 @@ import React from "react";
 
 export const SESSION = { authToken: null };
 
-// An ES7 decorator that enforces sign-in for a specified route handler.
-export function isSignedIn(target) {
-  if (!(target.prototype instanceof React.Component)) {
-    throw new Error("Specified target is not a React component.");
+export function requireSignIn(nextState, replaceState) {
+  if (!SESSION.authToken) {
+    replaceState(null, "/sign-in")
   }
-
-  target.willTransitionTo = transition => {
-    if (!SESSION.authToken) {
-      transition.redirect("/sign-in");
-    }
-  };
 }
 
-// An ES7 decorator that enforces sign-out for a specified route handler.
-export function isSignedOut(target) {
-  if (!(target.prototype instanceof React.Component)) {
-    throw new Error("Specified target is not a React component.");
+export function requireSignOut(nextState, replaceState) {
+  if (SESSION.authToken) {
+    replaceState(null, "/sign-out")
   }
-
-  target.willTransitionTo = transition => {
-    if (SESSION.authToken) {
-      transition.redirect("/sign-out");
-    }
-  };
 }

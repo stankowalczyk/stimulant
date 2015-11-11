@@ -1,10 +1,9 @@
 import React from "react";
 import {Grid, Row, Col, PageHeader, Button, Input, Alert} from "react-bootstrap";
-import {SESSION, isSignedOut} from "./";
+import {SESSION} from "./";
 
-@isSignedOut
 export class SignIn extends React.Component {
-  static contextTypes = { router: React.PropTypes.func }
+  static contextTypes = { history: React.PropTypes.object }
 
   render() {
     return (
@@ -33,11 +32,10 @@ export class SignIn extends React.Component {
     );
   }
 
-  handleFormSubmit(evt) {
-    evt.preventDefault(); // Don't follow form submission.
+  handleFormSubmit(event) {
+    event.preventDefault(); // Don't follow form submission.
 
-    // TODO: Send sign-in request to API.
     SESSION.authToken = "fake-token";
-    this.context.router.transitionTo("app");
+    this.context.history.pushState(null, "/");
   }
 }

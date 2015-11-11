@@ -1,7 +1,8 @@
 import "babelify/polyfill";
 import React from "react";
-import Router, {Route, RouteHandler, DefaultRoute} from "react-router";
-import {SESSION} from "./session";
+import ReactDOM from "react-dom";
+import {Router, Route, IndexRoute} from "react-router";
+import {SESSION, requireSignIn, requireSignOut} from "./session";
 import {SignIn} from "./session/sign-in";
 import {SignOut} from "./session/sign-out";
 import {Dashboard} from "./dashboard";
@@ -12,19 +13,18 @@ class App extends React.Component {
     return (
       <div>
         {SESSION.authToken && <Navbar />}
-        <RouteHandler />
+        {this.props.children}
       </div>
     );
   }
 }
 
-let routes = (
-  <Route name="app" path="/" handler={App}>
-    <Route name="sign-in" handler={SignIn} />
-    <Route name="sign-out" handler={SignOut} />
-    <DefaultRoute handler={Dashboard} />
-  </Route>
-);
-
-// Render the app!
-Router.run(routes, Handler => React.render(<Handler />, document.getElementById("app")));
+ReactDOM.render(
+  <Router>
+    <Route path="/" component={App}>
+      <IndexRoute component={Dashboard} onEnter={requireSignIn} />
+      <Route path="sign-in" component={SignIn} onEnter={requireSignOut} />
+      <Route path="sign-out" component={SignOut} onEnter={requireSignIn} />
+    </Route>
+  </Router>
+, document.getElementById("app"));

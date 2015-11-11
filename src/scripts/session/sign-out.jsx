@@ -1,10 +1,9 @@
 import React from "react";
 import {Grid} from "react-bootstrap";
-import {SESSION, isSignedIn} from "./";
+import {SESSION} from "./";
 
-@isSignedIn
 export class SignOut extends React.Component {
-  static contextTypes = { router: React.PropTypes.func }
+  static contextTypes = { history: React.PropTypes.object }
 
   render() {
     return (
@@ -17,10 +16,9 @@ export class SignOut extends React.Component {
   }
 
   componentDidMount() {
-    // TODO: Send sign-out request to API.
     setTimeout(() => {
       SESSION.authToken = null;
-      this.context.router.transitionTo("app");
+      this.context.history.pushState(null, "/");
     }, 2000);
   }
 }
