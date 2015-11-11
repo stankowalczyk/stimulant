@@ -1,6 +1,6 @@
 import React from "react";
 import {Grid, Row, Col, PageHeader, Button, Input, Alert} from "react-bootstrap";
-import {SESSION} from "./";
+import {Session} from "./";
 
 export class SignIn extends React.Component {
   static contextTypes = { history: React.PropTypes.object }
@@ -35,7 +35,7 @@ export class SignIn extends React.Component {
   handleFormSubmit(event) {
     event.preventDefault(); // Don't follow form submission.
 
-    SESSION.authToken = "fake-token";
+    Session.signIn("fake-auth-token");
     this.context.history.pushState(null, "/");
   }
 }

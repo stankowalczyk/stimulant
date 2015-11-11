@@ -1,6 +1,6 @@
 import React from "react";
 import {Grid} from "react-bootstrap";
-import {SESSION} from "./";
+import {Session} from "./";
 
 export class SignOut extends React.Component {
   static contextTypes = { history: React.PropTypes.object }
@@ -17,7 +17,7 @@ export class SignOut extends React.Component {
 
   componentDidMount() {
     setTimeout(() => {
-      SESSION.authToken = null;
+      Session.signOut();
       this.context.history.pushState(null, "/");
     }, 2000);
   }

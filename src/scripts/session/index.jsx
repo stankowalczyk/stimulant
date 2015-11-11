@@ -1,15 +1,31 @@
-import React from "react";
+export class Session {
+  static authToken = null
 
-export const SESSION = { authToken: null };
-
-export function requireSignIn(nextState, replaceState) {
-  if (!SESSION.authToken) {
-    replaceState(null, "/sign-in")
+  static get isSignedIn() {
+    return Session.authToken !== null;
   }
-}
 
-export function requireSignOut(nextState, replaceState) {
-  if (SESSION.authToken) {
-    replaceState(null, "/sign-out")
+  static signIn(authToken) {
+    Session.authToken = authToken;
+  }
+
+  static signOut() {
+    Session.authToken = null;
+  }
+
+  static requireSignIn(nextState, replaceState) {
+    if (!Session.isSignedIn) {
+      replaceState(null, "/sign-in");
+    }
+  }
+
+  static requireSignOut(nextState, replaceState) {
+    if (Session.isSignedIn) {
+      replaceState(null, "/sign-out");
+    }
+  }
+
+  constructor() {
+    throw new Error("Static class cannot be instantiated.");
   }
 }
