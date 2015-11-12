@@ -1,6 +1,7 @@
 {
   "private": true,
   "dependencies": {
+    "autheus": "1.0.0",
     "bootstrap-sass": "3.3.5",
     "font-awesome": "4.4.0",
     "history": "1.13.0",
