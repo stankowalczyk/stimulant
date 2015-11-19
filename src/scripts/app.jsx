@@ -11,7 +11,7 @@ import {Navbar} from "./navbar";
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <div id="app">
         {Autheus.isSignedIn && <Navbar />}
         {this.props.children}
       </div>
@@ -29,4 +29,4 @@ ReactDOM.render((
       <Route path="sign-out" component={SignOut} onEnter={requireSignIn} />
     </Route>
   </Router>
-), document.getElementById("app"));
+), document.getElementById("react"));
