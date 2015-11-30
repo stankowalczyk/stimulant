@@ -34,9 +34,7 @@ let bundler = browserify({
   entries: `./${config.script}`,
   extensions: [".jsx"],
   cache: {}
-}).transform(babelify.configure({
-  optional: ["es7.classProperties", "es7.decorators"]
-})).plugin(rememberify);
+}).transform(babelify).plugin(rememberify);
 
 gulp.task("clean", done => {
   del(config.buildDir).then(() => done()).catch(err => done(err));
