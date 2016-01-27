@@ -3,7 +3,7 @@ import {Grid, Row, Col, PageHeader, Button, Input, Alert} from "react-bootstrap"
 import {Autheus} from "autheus";
 
 export class SignIn extends React.Component {
-  static contextTypes = { history: React.PropTypes.object }
+  static contextTypes = { history: React.PropTypes.object };
 
   render() {
     return (

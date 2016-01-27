@@ -3,7 +3,7 @@ import {Grid} from "react-bootstrap";
 import {Autheus} from "autheus";
 
 export class SignOut extends React.Component {
-  static contextTypes = { history: React.PropTypes.object }
+  static contextTypes = { history: React.PropTypes.object };
 
   render() {
     return (
