@@ -1,10 +1,9 @@
 import React from "react";
 import {Grid} from "react-bootstrap";
+import {hashHistory} from "react-router";
 import {Autheus} from "autheus";
 
 export class SignOut extends React.Component {
-  static contextTypes = { history: React.PropTypes.object };
-
   render() {
     return (
       <Grid fluid>
@@ -18,7 +17,7 @@ export class SignOut extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       Autheus.signOut();
-      this.context.history.pushState(null, "/");
+      hashHistory.push("/");
     }, 2000);
   }
 }

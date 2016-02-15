@@ -1,7 +1,7 @@
 import "babel-polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
-import {Router, Route, IndexRoute} from "react-router";
+import {Router, Route, IndexRoute, hashHistory} from "react-router";
 import {Autheus} from "autheus";
 import {SignIn} from "./session/sign-in";
 import {SignOut} from "./session/sign-out";
@@ -22,7 +22,7 @@ class App extends React.Component {
 let [requireSignIn, requireSignOut] = Autheus.getReactRouterHooks("/sign-in", "/sign-out");
 
 ReactDOM.render((
-  <Router>
+  <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Dashboard} onEnter={requireSignIn} />
       <Route path="sign-in" component={SignIn} onEnter={requireSignOut} />

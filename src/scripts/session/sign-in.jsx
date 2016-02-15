@@ -1,10 +1,9 @@
 import React from "react";
 import {Grid, Row, Col, PageHeader, Button, Input, Alert} from "react-bootstrap";
+import {hashHistory} from "react-router";
 import {Autheus} from "autheus";
 
 export class SignIn extends React.Component {
-  static contextTypes = { history: React.PropTypes.object };
-
   render() {
     return (
       <Grid fluid>
@@ -36,6 +35,6 @@ export class SignIn extends React.Component {
     event.preventDefault(); // Don't follow form submission.
 
     Autheus.signIn("fake-auth-token");
-    this.context.history.pushState(null, "/");
+    hashHistory.push("/");
   }
 }
