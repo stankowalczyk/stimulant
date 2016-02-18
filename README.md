@@ -7,7 +7,7 @@ Opinionated bootstrapper for [React](https://facebook.github.io/react/) projects
 Simply execute the following commands:
 
 ```bash
-$ git clone git@github.com:ssilab/stimulant.git
+$ git clone git@github.com:dstil/stimulant.git
 $ cd stimulant
 $ npm install
 ```
@@ -34,4 +34,4 @@ Then simply upload the `dist/` directory to the remote server.
 
 ## Related
 
-If React isn't your thing, then perhaps try [beautstrap](https://github.com/ssilab/beautstrap), our AngularJS project bootstrapper.
+If React isn't your thing, then perhaps try [beautstrap](https://github.com/dstil/beautstrap), our AngularJS project bootstrapper.
