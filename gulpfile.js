@@ -1,1 +1,1 @@
-require("stimulant-gulpfile");
+node_modules/stimulant-gulpfile/dist/index.js
