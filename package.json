@@ -11,6 +11,6 @@
     "react-router": "2.0.0"
   },
   "devDependencies": {
-    "stimulant-gulpfile": "0.0.2"
+    "stimulant-gulpfile": "0.0.3"
   }
 }
