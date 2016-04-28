@@ -3,10 +3,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {Router, Route, IndexRoute, hashHistory} from "react-router";
 import {Autheus} from "autheus";
-import {SignIn} from "./session/sign-in";
-import {SignOut} from "./session/sign-out";
+import {Navbar} from "./utils";
+import {SignIn, SignOut} from "./session";
 import {Dashboard} from "./dashboard";
-import {Navbar} from "./navbar";
 
 class App extends React.Component {
   render() {

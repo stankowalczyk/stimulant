@@ -1,11 +1,4 @@
-export const ENV = {
-  development: {
-    apiUrl: "http://localhost:3000"
-  },
-  staging: {
-    apiUrl: "http://localhost:3001"
-  },
-  production: {
-    apiUrl: "http://localhost:3002"
-  }
-}[process.env.NODE_ENV];
+import development from "./development";
+import staging from "./staging";
+import production from "./production";
+export default {development, staging, production}[process.env.NODE_ENV];

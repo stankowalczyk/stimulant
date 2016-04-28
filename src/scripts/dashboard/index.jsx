@@ -1,6 +1,6 @@
 import React from "react";
 import {PageHeader, Grid} from "react-bootstrap";
-import {ENV} from "../environment";
+import ENV from "../environment";
 
 export class Dashboard extends React.Component {
   render() {
