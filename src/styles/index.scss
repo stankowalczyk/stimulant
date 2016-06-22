@@ -1,9 +1,12 @@
 $fa-font-path: "../fonts/font-awesome";
+$OpenSansPath: "../fonts/open-sans";
 
 @import "node_modules/font-awesome/scss/font-awesome";
+@import "node_modules/open-sans-fontface/sass/open-sans";
 @import "node_modules/bootstrap-sass/assets/stylesheets/_bootstrap";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_theme";
 
 body {
   padding-top: $navbar-height; // Necessary for Bootstrap's fixed navbar.
+  font-family: "Open Sans", "Helvetica", sans-serif;
 }
