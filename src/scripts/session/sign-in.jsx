@@ -1,9 +1,13 @@
 import React from "react";
 import { Grid, Row, Col, PageHeader, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { hashHistory } from "react-router";
-import Session from "../session";
+import Session from "./";
 
 export default class extends React.Component {
+  static onEnter(nextState, replace) {
+    if (Session.isSignedIn) replace("/not-found");
+  }
+
   render() {
     return (
       <Grid>

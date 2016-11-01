@@ -17,16 +17,4 @@ export default class Session {
   static signOut() {
     localStorage.removeItem("session");
   }
-
-  static requireSignIn(nextState, replace) {
-    Session.isSignedIn || replace("/sign-in");
-  }
-
-  static requireSignOut(nextState, replace) {
-    Session.isSignedIn && replace("/sign-out");
-  }
-
-  static determineRootRoute(nextState, replace) {
-    Session.isSignedIn ? replace("/dashboard") : replace("/welcome");
-  }
 }

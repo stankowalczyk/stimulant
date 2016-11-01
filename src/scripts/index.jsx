@@ -30,14 +30,18 @@ function App(props) {
   );
 }
 
+function onEnter(nextState, replace) {
+  Session.isSignedIn ? replace("/dashboard") : replace("/welcome");
+}
+
 ReactDOM.render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-      <IndexRoute onEnter={Session.determineRootRoute} />
-      <Route path="welcome" component={Welcome} onEnter={Session.requireSignOut} />
-      <Route path="dashboard" component={Dashboard} onEnter={Session.requireSignIn} />
-      <Route path="sign-in" component={SignIn} onEnter={Session.requireSignOut} />
-      <Route path="sign-out" component={SignOut} onEnter={Session.requireSignIn} />
+      <IndexRoute onEnter={onEnter} />
+      <Route path="welcome" component={Welcome} onEnter={Welcome.onEnter} />
+      <Route path="dashboard" component={Dashboard} onEnter={Dashboard.onEnter} />
+      <Route path="sign-in" component={SignIn} onEnter={SignIn.onEnter} />
+      <Route path="sign-out" component={SignOut} onEnter={SignOut.onEnter} />
       <Route path="unauthorised" component={Unauthorised} />
       <Route path="*" component={NotFound} />
     </Route>
