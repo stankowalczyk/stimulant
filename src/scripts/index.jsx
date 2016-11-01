@@ -8,6 +8,7 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import Welcome from "./welcome";
 import Dashboard from "./dashboard";
+import { NotFound, Unauthorised } from "./errors";
 
 function App(props) {
   return (
@@ -37,6 +38,8 @@ ReactDOM.render((
       <Route path="dashboard" component={Dashboard} onEnter={Session.requireSignIn} />
       <Route path="sign-in" component={SignIn} onEnter={Session.requireSignOut} />
       <Route path="sign-out" component={SignOut} onEnter={Session.requireSignIn} />
+      <Route path="unauthorised" component={Unauthorised} />
+      <Route path="*" component={NotFound} />
     </Route>
   </Router>
 ), document.getElementById("react"));
