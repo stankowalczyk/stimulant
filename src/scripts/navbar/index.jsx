@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar, Nav, NavItem } from "react-bootstrap";
-import { Autheus } from "autheus";
+import Session from "../session";
 
 export default function(props) {
   return (
@@ -13,7 +13,7 @@ export default function(props) {
       </Navbar.Header>
       <Navbar.Collapse>
         {
-          Autheus.isSignedIn &&
+          Session.isSignedIn &&
           <Nav pullRight>
             <NavItem eventKey={1} href="#/sign-out">
               <i className="fa fa-sign-out"></i> Sign Out

@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "react-bootstrap";
 import { hashHistory } from "react-router";
-import { Autheus } from "autheus";
+import Session from "../session";
 
 export default class extends React.Component {
   render() {
@@ -16,7 +16,7 @@ export default class extends React.Component {
 
   componentDidMount() {
     setTimeout(() => {
-      Autheus.signOut();
+      Session.signOut();
       hashHistory.push("/");
     }, 2000);
   }

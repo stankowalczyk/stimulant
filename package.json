@@ -1,7 +1,6 @@
 {
   "private": true,
   "dependencies": {
-    "autheus": "2.0.2",
     "babel-polyfill": "6.16.0",
     "bootstrap-sass": "3.3.7",
     "font-awesome": "4.6.3",
