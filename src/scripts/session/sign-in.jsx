@@ -1,12 +1,12 @@
 import React from "react";
-import {Grid, Row, Col, PageHeader, Button, Input, Alert} from "react-bootstrap";
-import {hashHistory} from "react-router";
-import {Autheus} from "autheus";
+import { Grid, Row, Col, PageHeader, Button, Alert, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { hashHistory } from "react-router";
+import { Autheus } from "autheus";
 
 export class SignIn extends React.Component {
   render() {
     return (
-      <Grid fluid>
+      <Grid>
         <Row>
           <Col md={4} sm={2} />
 
@@ -20,8 +20,19 @@ export class SignIn extends React.Component {
             </Alert>
 
             <form onSubmit={this.handleFormSubmit.bind(this)}>
-              <Input placeholder="Password" type="password" ref="password" required />
-              <Button bsStyle="success" type="submit"><i className="fa fa-sign-in"></i> Sign In</Button>
+              <FormGroup>
+                <ControlLabel>Username</ControlLabel>
+                <FormControl type="text" required />
+              </FormGroup>
+
+              <FormGroup>
+                <ControlLabel>Password</ControlLabel>
+                <FormControl type="password" required />
+              </FormGroup>
+
+              <Button bsStyle="success" type="submit">
+                <i className="fa fa-sign-in"></i> Sign In
+              </Button>
             </form>
           </Col>
 
