@@ -21,5 +21,14 @@ html, body, #react, .app {
     flex: 1;
     margin-top: $navbar-height + 20px; // For Bootstrap's fixed navbar.
     margin-bottom: 20px; // For the footer.
+
+    .content-appear, .content-enter {
+      animation: revealContent 300ms linear;
+
+      @keyframes revealContent {
+        from { opacity: 0; transform: translateY(-10%); }
+        to { opacity: 1; transform: none; }
+      }
+    }
   }
 }

@@ -1,6 +1,7 @@
 import "babel-polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
+import Content from "react-addons-css-transition-group";
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import { Autheus } from "autheus";
 import { SignIn, SignOut } from "./session";
@@ -8,16 +9,24 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import Dashboard from "./dashboard";
 
-class App extends React.Component {
-  render() {
-    return (
-      <div className="app">
-        <Navbar />
-        <div className="content">{this.props.children}</div>
-        <Footer />
-      </div>
-    );
-  }
+function App(props) {
+  return (
+    <div className="app">
+      <Navbar />
+      <Content
+        component="div"
+        className="content"
+        transitionName="content"
+        transitionAppear={true}
+        transitionAppearTimeout={300}
+        transitionEnterTimeout={300}
+        transitionLeave={false}
+      >
+        {React.cloneElement(props.children, { key: props.location.pathname })}
+      </Content>
+      <Footer />
+    </div>
+  );
 }
 
 let [requireSignIn, requireSignOut] = Autheus.getReactRouterHooks("/sign-in", "/sign-out");
