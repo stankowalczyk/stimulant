@@ -1,12 +1,25 @@
-$fa-font-path: "../fonts/font-awesome";
-$OpenSansPath: "../fonts/open-sans";
-
+@import "overrides"; // Override third-party styles (i.e. Bootstrap).
 @import "node_modules/font-awesome/scss/font-awesome";
 @import "node_modules/open-sans-fontface/sass/open-sans";
 @import "node_modules/bootstrap-sass/assets/stylesheets/_bootstrap";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_theme";
+@import "footer";
 
-body {
-  padding-top: $navbar-height; // Necessary for Bootstrap's fixed navbar.
-  font-family: "Open Sans", "Helvetica", sans-serif;
+html, body, #react, .app {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    flex: 1;
+    margin-top: $navbar-height + 20px; // For Bootstrap's fixed navbar.
+    margin-bottom: 20px; // For the footer.
+  }
 }

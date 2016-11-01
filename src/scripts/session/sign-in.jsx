@@ -3,7 +3,7 @@ import { Grid, Row, Col, PageHeader, Button, Alert, FormGroup, FormControl, Cont
 import { hashHistory } from "react-router";
 import { Autheus } from "autheus";
 
-export class SignIn extends React.Component {
+export default class extends React.Component {
   render() {
     return (
       <Grid>

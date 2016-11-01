@@ -1,0 +1,10 @@
+footer {
+  p {
+    @extend .small, .text-center;
+
+    margin: 10px;
+    color: fade-out($text-color, 0.7);
+  }
+
+  border-top: 1px solid fade-out($text-color, 0.9);
+}

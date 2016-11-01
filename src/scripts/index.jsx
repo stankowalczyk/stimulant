@@ -5,14 +5,16 @@ import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import { Autheus } from "autheus";
 import { SignIn, SignOut } from "./session";
 import Navbar from "./navbar";
+import Footer from "./footer";
 import Dashboard from "./dashboard";
 
 class App extends React.Component {
   render() {
     return (
-      <div id="app">
-        {Autheus.isSignedIn && <Navbar />}
-        {this.props.children}
+      <div className="app">
+        <Navbar />
+        <div className="content">{this.props.children}</div>
+        <Footer />
       </div>
     );
   }

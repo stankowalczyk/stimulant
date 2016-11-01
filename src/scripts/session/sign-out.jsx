@@ -3,7 +3,7 @@ import { Grid } from "react-bootstrap";
 import { hashHistory } from "react-router";
 import { Autheus } from "autheus";
 
-export class SignOut extends React.Component {
+export default class extends React.Component {
   render() {
     return (
       <Grid>
