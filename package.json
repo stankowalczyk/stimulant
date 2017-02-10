@@ -1,17 +1,17 @@
 {
   "private": true,
   "dependencies": {
-    "babel-polyfill": "6.16.0",
+    "babel-polyfill": "6.22.0",
     "bootstrap-sass": "3.3.7",
-    "font-awesome": "4.6.3",
+    "font-awesome": "4.7.0",
     "open-sans-fontface": "1.4.0",
-    "react": "15.3.2",
-    "react-addons-css-transition-group": "15.3.2",
+    "react": "15.4.2",
+    "react-addons-css-transition-group": "15.4.2",
     "react-bootstrap": "0.30.6",
-    "react-dom": "15.3.2",
+    "react-dom": "15.4.2",
     "react-router": "2.8.1"
   },
   "devDependencies": {
-    "stimulant-gulpfile": "1.2.9"
+    "stimulant-gulpfile": "1.2.10"
   }
 }
